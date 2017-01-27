@@ -1,0 +1,4 @@
+C:\Users\kathy\documents\visual studio 2010\Projects\MavlinkExampleCSharp\bin\Release\MavlinkExampleCSharp.exe
+C:\Users\kathy\documents\visual studio 2010\Projects\MavlinkExampleCSharp\bin\Release\MavlinkExampleCSharp.pdb
+C:\Users\kathy\documents\visual studio 2010\Projects\MavlinkExampleCSharp\obj\x86\Release\MavlinkExampleCSharp.exe
+C:\Users\kathy\documents\visual studio 2010\Projects\MavlinkExampleCSharp\obj\x86\Release\MavlinkExampleCSharp.pdb

@@ -1,0 +1,9 @@
+c:\users\kathy\documents\visual studio 2010\Projects\MavlinkExampleCSharp\bin\Debug\MavlinkExampleCSharp.exe
+c:\users\kathy\documents\visual studio 2010\Projects\MavlinkExampleCSharp\bin\Debug\MavlinkExampleCSharp.pdb
+c:\users\kathy\documents\visual studio 2010\Projects\MavlinkExampleCSharp\obj\x86\Debug\MavlinkExampleCSharp.exe
+c:\users\kathy\documents\visual studio 2010\Projects\MavlinkExampleCSharp\obj\x86\Debug\MavlinkExampleCSharp.pdb
+C:\My Files\Project Files\C# Projects\Mavlink_Comms\obj\x86\Debug\MavlinkExampleCSharp.exe
+C:\My Files\Project Files\C# Projects\Mavlink_Comms\obj\x86\Debug\MavlinkExampleCSharp.pdb
+C:\My Files\Project Files\C# Projects\Mavlink_Comms\bin\Debug\MavlinkExampleCSharp.exe
+C:\My Files\Project Files\C# Projects\Mavlink_Comms\bin\Debug\MavlinkExampleCSharp.pdb
+C:\My Files\Project Files\C# Projects\Mavlink_Comms\obj\x86\Debug\MavlinkExampleCSharp.csprojResolveAssemblyReference.cache
