@@ -22,7 +22,7 @@ using System.Diagnostics;
  *  -- MAVLINK_MSG_ID_GLOBAL_POSITION_INT and MAVLINK_MSG_ID_PARAM_VALUE -- as an example. If you search for those strings in that library you can see what I did.
  *  
  */
-namespace MavlinkExampleCSharp
+namespace MavlinkComms
 {
     public enum MAV_PARAM_TYPE
     {
@@ -119,9 +119,6 @@ namespace MavlinkExampleCSharp
     } ;
 
 
-
-
-
     public struct mavlink_param_value_t
     {
         public object param_value; ///< Onboard parameter value
@@ -131,7 +128,7 @@ namespace MavlinkExampleCSharp
         public MAV_PARAM_TYPE param_type; ///< Onboard parameter type: see the MAV_PARAM_TYPE enum for supported data types.
     } ;
 
-    class MavlinkMessages
+    public class MavlinkMessages
     {
         public const int MAVLINK_MSG_ID_HEARTBEAT               = 0;
         public const int MAVLINK_MSG_ID_SYSTEM_STATUS           = 1;
@@ -144,6 +141,15 @@ namespace MavlinkExampleCSharp
 
         public const int MAVLINK_HEADER_SIZE = 6;
         public const int MAVLINK_CHECKSUM_SIZE = 2;
+
+        public mavlink_global_position_int_t pos;
+        public mavlink_heartbeat_t heartbeat;
+        public mavlink_system_status_t system_stat;
+        public mavlink_system_time_t system_time;
+        public mavlink_scaled_pressure_t scaled_psi_temp;
+        public mavlink_attitude_t attitude;
+        public mavlink_scaled_imu_t scaled_imu;
+        public mavlink_param_value_t param_value;
 
         UdpClient mUdpClient;
         IPEndPoint mEndPoint;
@@ -177,8 +183,9 @@ namespace MavlinkExampleCSharp
             mRunning = false;
         }
         //example for how to break apart messages
-        void parseMessage(ref byte[] msg)
+        public void parseMessage(ref byte[] msg)
         {
+            /*
             mavlink_global_position_int_t pos;
             mavlink_heartbeat_t heartbeat;
             mavlink_system_status_t system_stat;
@@ -187,7 +194,7 @@ namespace MavlinkExampleCSharp
             mavlink_attitude_t attitude;
             mavlink_scaled_imu_t scaled_imu;
             mavlink_param_value_t param_value;
-
+            */
 
 
             //We need to be able to read at least the length of the payload
@@ -357,7 +364,7 @@ namespace MavlinkExampleCSharp
                     break;
             }
         }
-        void DoExample()
+        public void DoExample()
         {
             mUdpClient = new UdpClient(14550);
             mEndPoint = new IPEndPoint(0, 14550); ///0 address translates as INADDR_ANY, for people with C++ background
@@ -366,11 +373,12 @@ namespace MavlinkExampleCSharp
                 IAsyncResult result = mUdpClient.BeginReceive(AsyncRecv, this);
                 //Always time out. Never block. 
                 result.AsyncWaitHandle.WaitOne(1000);
-                if (Console.KeyAvailable)
-                    break;
+             //   if (Console.KeyAvailable)
+              //      break;
             }
         }
-        static void Main(string[] args)
+        //static void Main(string[] args)
+        public static void Main(string[] args)
         {
             MavlinkMessages mavlinkExample = new MavlinkMessages();
             //You don't really need this because you have AsyncWaitHandle so there's a "pause" that you can use to check the console

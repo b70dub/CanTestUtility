@@ -8,7 +8,7 @@
     <ProjectGuid>{83CD14B2-3B64-4CCA-8A97-99EEB91A483F}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MavlinkExampleCSharp</RootNamespace>
+    <RootNamespace>MavlinkComms</RootNamespace>
     <AssemblyName>MavlinkExampleCSharp</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
