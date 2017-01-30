@@ -60,6 +60,7 @@ namespace MavlinkComms
         public uint custom_mode; ///< A bitfield for use for autopilot-specific flags.
         public uint system_status; ///< System status flag, see MAV_STATE ENUM
         public uint mavlink_version; ///< 	MAVLink version, not writable by user, gets added by protocol because of magic data type: uint8_t_mavlink_version
+        public DateTime previous_heartbeat_time;
     } ;
 
     public struct mavlink_system_status_t
@@ -250,31 +251,19 @@ namespace MavlinkComms
                                 public float yawspeed; ///< Yaw angular speed (rad/s)
                             } ;
 
-                            public struct mavlink_scaled_imu_t
-                            {
-                                public uint time_boot_ms; ///< Timestamp (milliseconds since system boot)
-                                public int xacc; ///< X acceleration (mg)
-                                public int yacc; ///< Y acceleration (mg)
-                                public int zacc; ///< Z acceleration (mg)
-                                public int xgyro; ///< Angular speed around X axis (millirad /sec)
-                                public int ygyro; ///< Angular speed around Y axis (millirad /sec)
-                                public int zgyro; ///< Angular speed around Z axis (millirad /sec)
-                                public int xmag; ///< 	X Magnetic field (milli tesla)
-                                public int ymag; ///< 	Y Magnetic field (milli tesla)
-                                public int zmag; ///< 	Z Magnetic field (milli tesla)
-                            } ;
+                          
                         */
 
                         //This is an example of a "fixed" message
                         case MAVLINK_MSG_ID_ATTITUDE:
                             {
                                 attitude.time_boot_ms = BitConverter.ToUInt32(msg, offset + msg_offset); msg_offset += sizeof(int);
-                                attitude.roll = BitConverter.ToSingle(msg, offset + msg_offset); msg_offset += sizeof(short);  //maybe need to use toDouble instead
-                                attitude.pitch = BitConverter.ToSingle(msg, offset + msg_offset); msg_offset += sizeof(short);
-                                attitude.yaw = BitConverter.ToSingle(msg, offset + msg_offset); msg_offset += sizeof(short);
-                                attitude.rollspeed = BitConverter.ToSingle(msg, offset + msg_offset); msg_offset += sizeof(short);
-                                attitude.pitchspeed = BitConverter.ToSingle(msg, offset + msg_offset); msg_offset += sizeof(short);
-                                attitude.yawspeed = BitConverter.ToSingle(msg, offset + msg_offset); msg_offset += sizeof(short);
+                                attitude.roll = BitConverter.ToSingle(msg, offset + msg_offset); msg_offset += sizeof(float);  //maybe need to use toDouble instead
+                                attitude.pitch = BitConverter.ToSingle(msg, offset + msg_offset); msg_offset += sizeof(float);
+                                attitude.yaw = BitConverter.ToSingle(msg, offset + msg_offset); msg_offset += sizeof(float);
+                                attitude.rollspeed = BitConverter.ToSingle(msg, offset + msg_offset); msg_offset += sizeof(float);
+                                attitude.pitchspeed = BitConverter.ToSingle(msg, offset + msg_offset); msg_offset += sizeof(float);
+                                attitude.yawspeed = BitConverter.ToSingle(msg, offset + msg_offset); msg_offset += sizeof(float);
                                 Console.WriteLine("MAVLINK_MSG_ID_ATTITUDE = " + attitude.time_boot_ms + "," + attitude.roll + "," + attitude.pitch + "," + attitude.yaw + "," + attitude.rollspeed + "," + attitude.pitchspeed + "," + attitude.yawspeed);
                             }
                             break;
@@ -307,6 +296,7 @@ namespace MavlinkComms
                                 msg_offset += sizeof(byte); //heartbeat.base_mode  
                                 msg_offset += sizeof(int); //heartbeat.custom_mode 
                                 heartbeat.system_status = msg[offset + msg_offset]; msg_offset += sizeof(int);
+                                heartbeat.previous_heartbeat_time = DateTime.UtcNow;
                                 msg_offset += sizeof(byte); //heartbeat.base_mode  
                                 Console.WriteLine("heartbeat.system_status = " + heartbeat.system_status);
                             }

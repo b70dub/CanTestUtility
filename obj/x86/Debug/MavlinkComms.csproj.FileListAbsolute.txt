@@ -2,3 +2,4 @@ C:\My Files\Project Files\C# Projects\Mavlink_Comms\bin\Debug\MavlinkComms.exe
 C:\My Files\Project Files\C# Projects\Mavlink_Comms\bin\Debug\MavlinkComms.pdb
 C:\My Files\Project Files\C# Projects\Mavlink_Comms\obj\x86\Debug\MavlinkComms.exe
 C:\My Files\Project Files\C# Projects\Mavlink_Comms\obj\x86\Debug\MavlinkComms.pdb
+C:\My Files\Project Files\C# Projects\Mavlink_Comms\obj\x86\Debug\MavlinkComms.csprojResolveAssemblyReference.cache
