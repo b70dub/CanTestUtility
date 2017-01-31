@@ -433,6 +433,9 @@ namespace MavlinkComms
         }
         public void DoExample()
         {
+            //When we get here we should first check to see if there is another instance of UdpClient that is already bound to port 14550
+
+
             mUdpClient = new UdpClient(14550);
             mEndPoint = new IPEndPoint(0, 14550); ///0 address translates as INADDR_ANY, for people with C++ background
             while( mRunning )
