@@ -119,6 +119,39 @@ namespace MavlinkComms
         public float zmag; ///< 	Z Magnetic field (milli tesla)
     } ;
 
+    public struct mavlink_scaled_imu_2
+    {
+        public uint time_boot_ms; ///< Timestamp (milliseconds since system boot)
+        public float xacc; ///< X acceleration (mg)
+        public float yacc; ///< Y acceleration (mg)
+        public float zacc; ///< Z acceleration (mg)
+        public float xgyro; ///< Angular speed around X axis (millirad /sec)
+        public float ygyro; ///< Angular speed around Y axis (millirad /sec)
+        public float zgyro; ///< Angular speed around Z axis (millirad /sec)
+        public float xmag; ///< 	X Magnetic field (milli tesla)
+        public float ymag; ///< 	Y Magnetic field (milli tesla)
+        public float zmag; ///< 	Z Magnetic field (milli tesla)
+    } ;
+
+    public struct mavlink_hi_res_imu
+    {
+        public uint time_boot_ms; ///< Timestamp (milliseconds since system boot)
+        public float xacc; ///< X acceleration (m/s^2)
+        public float yacc; ///< Y acceleration (m/s^2)
+        public float zacc; ///< Z acceleration (m/s^2)
+        public float xgyro; ///< Angular speed around X axis (rad /sec)
+        public float ygyro; ///< Angular speed around Y axis (rad /sec)
+        public float zgyro; ///< Angular speed around Z axis (rad /sec)
+        public float xmag; ///< 	X Magnetic field (Gauss)
+        public float ymag; ///< 	Y Magnetic field (Gauss)
+        public float zmag; ///< 	Z Magnetic field (Gauss)
+        public float abs_press; ///< absolute pressure in millibar
+        public float diff_press; ///< differential pressure in millibar
+        public float press_alt; ///< altitude calculated from pressure
+        public float temperature; ///< temperature in deg celcius
+        public uint fields_updated; ///< bitmask for fields that have updated since last message, bit 0 = Xacc, bit 12 = temperature            
+    } ;
+    
 
     public struct mavlink_param_value_t
     {
@@ -139,6 +172,9 @@ namespace MavlinkComms
         public const int MAVLINK_MSG_ID_SCALED_PRESSURE         = 29;
         public const int MAVLINK_MSG_ID_ATTITUDE                = 30;
         public const int MAVLINK_MSG_ID_GLOBAL_POSITION_INT     = 33;
+        public const int MAVLINK_MSG_ID_HI_RES_IMU              = 105;
+        public const int MAVLINK_MSG_ID_SCALED_IMU_2            = 116;
+        //possibly include vibration (message id# 241)
 
         public const int MAVLINK_HEADER_SIZE = 6;
         public const int MAVLINK_CHECKSUM_SIZE = 2;
@@ -150,6 +186,8 @@ namespace MavlinkComms
         public mavlink_scaled_pressure_t scaled_psi_temp;
         public mavlink_attitude_t attitude;
         public mavlink_scaled_imu_t scaled_imu;
+        public mavlink_scaled_imu_2 scaled_imu_2;
+        public mavlink_hi_res_imu hi_res_imu;
         public mavlink_param_value_t param_value;
 
         UdpClient mUdpClient;
@@ -285,6 +323,45 @@ namespace MavlinkComms
                             }
                             break;
 
+                        //This is an example of a "fixed" message
+                        case MAVLINK_MSG_ID_SCALED_IMU_2:
+                            {
+                                scaled_imu_2.time_boot_ms = BitConverter.ToUInt32(msg, offset + msg_offset); msg_offset += sizeof(int);
+                                scaled_imu_2.xacc = BitConverter.ToInt16(msg, offset + msg_offset); msg_offset += sizeof(short);
+                                scaled_imu_2.yacc = BitConverter.ToInt16(msg, offset + msg_offset); msg_offset += sizeof(short);
+                                scaled_imu_2.zacc = BitConverter.ToInt16(msg, offset + msg_offset); msg_offset += sizeof(short);
+                                scaled_imu_2.xgyro = BitConverter.ToInt16(msg, offset + msg_offset); msg_offset += sizeof(short);
+                                scaled_imu_2.ygyro = BitConverter.ToInt16(msg, offset + msg_offset); msg_offset += sizeof(short);
+                                scaled_imu_2.zgyro = BitConverter.ToInt16(msg, offset + msg_offset); msg_offset += sizeof(short);
+                                scaled_imu_2.xmag = BitConverter.ToInt16(msg, offset + msg_offset); msg_offset += sizeof(short);
+                                scaled_imu_2.ymag = BitConverter.ToUInt16(msg, offset + msg_offset); msg_offset += sizeof(short);
+                                scaled_imu_2.zmag = BitConverter.ToUInt16(msg, offset + msg_offset); msg_offset += sizeof(short);
+                                Console.WriteLine("MAVLINK_MSG_ID_SCALED_IMU_2 = " + scaled_imu.time_boot_ms + "," + scaled_imu.xacc + "," + scaled_imu.yacc + "," + scaled_imu.zacc + "," + scaled_imu.xgyro + "," + scaled_imu.ygyro + "," + scaled_imu.zgyro + "," + scaled_imu.xmag + "," + scaled_imu.ymag + "," + scaled_imu.zmag);
+                            }
+                            break;
+                        
+                            
+                        //This is an example of a "fixed" message
+                        case MAVLINK_MSG_ID_HI_RES_IMU:
+                            {
+                                hi_res_imu.time_boot_ms = BitConverter.ToUInt32(msg, offset + msg_offset); msg_offset += sizeof(int);
+                                hi_res_imu.xacc = BitConverter.ToSingle(msg, offset + msg_offset); msg_offset += sizeof(float);
+                                hi_res_imu.yacc = BitConverter.ToSingle(msg, offset + msg_offset); msg_offset += sizeof(short);
+                                hi_res_imu.zacc = BitConverter.ToSingle(msg, offset + msg_offset); msg_offset += sizeof(short);
+                                hi_res_imu.xgyro = BitConverter.ToSingle(msg, offset + msg_offset); msg_offset += sizeof(short);
+                                hi_res_imu.ygyro = BitConverter.ToSingle(msg, offset + msg_offset); msg_offset += sizeof(short);
+                                hi_res_imu.zgyro = BitConverter.ToSingle(msg, offset + msg_offset); msg_offset += sizeof(short);
+                                hi_res_imu.xmag = BitConverter.ToSingle(msg, offset + msg_offset); msg_offset += sizeof(short);
+                                hi_res_imu.ymag = BitConverter.ToSingle(msg, offset + msg_offset); msg_offset += sizeof(short);
+                                hi_res_imu.zmag = BitConverter.ToSingle(msg, offset + msg_offset); msg_offset += sizeof(short);
+                                hi_res_imu.abs_press = BitConverter.ToSingle(msg, offset + msg_offset); msg_offset += sizeof(short);
+                                hi_res_imu.diff_press = BitConverter.ToSingle(msg, offset + msg_offset); msg_offset += sizeof(short);
+                                hi_res_imu.press_alt = BitConverter.ToSingle(msg, offset + msg_offset); msg_offset += sizeof(short);
+                                hi_res_imu.temperature = BitConverter.ToSingle(msg, offset + msg_offset); msg_offset += sizeof(short);
+                                hi_res_imu.fields_updated = BitConverter.ToUInt16(msg, offset + msg_offset); msg_offset += sizeof(short);
+                                Console.WriteLine("MAVLINK_MSG_ID_SCALED_IMU_2 = " + scaled_imu.time_boot_ms + "," + scaled_imu.xacc + "," + scaled_imu.yacc + "," + scaled_imu.zacc + "," + scaled_imu.xgyro + "," + scaled_imu.ygyro + "," + scaled_imu.zgyro + "," + scaled_imu.xmag + "," + scaled_imu.ymag + "," + scaled_imu.zmag);
+                            }
+                            break;
 
 
                         //This is an example of a "fixed" message
