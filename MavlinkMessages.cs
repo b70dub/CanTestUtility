@@ -442,7 +442,7 @@ namespace MavlinkComms
             {
                 IAsyncResult result = mUdpClient.BeginReceive(AsyncRecv, this);
                 //Always time out. Never block. 
-                result.AsyncWaitHandle.WaitOne(1000);
+                hresult.AsyncWaitHandle.WaitOne(1000);
              //   if (Console.KeyAvailable)
               //      break;
             }
